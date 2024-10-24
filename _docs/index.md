@@ -1,9 +1,3 @@
----
-title: Polaris Docs
-permalink: /docs/home/
-redirect_from: /docs/index.html
----
-
 ___
 
 ## Types of request classes
@@ -37,6 +31,7 @@ Here are the two types of requests we accept:
   "gameid": "123456"
 }
 ```
+
 
 We will tell you which endpoints use which, so please refer back to this or keep it in your mind while you read the documentation.
 
@@ -96,23 +91,70 @@ If the request was missing a required arguments, then it will return something l
 **Please note that the "message" arguments in these arguments are meant to be displayed to your members, outputted to logs, or exfiltrated to your webhooks. Some responses might not have these, so please perform a check in your code to see if the response had a message argument.**
 
 
+### /auth/check_game
+`Request Type: RequestNoUser` - `Method: POST` This endpoint checks if the corresponding `gameid` and `owner_secret` in the following strings are valid/is an actual registered and game.
+```json
+{
+  "owner_secret": "string",
+  "gameid": "string"
+}
+```
+The response will look like this:
+```json
+{
+  "status": "true",
+  "check": "true"
+}
+```
+If you are missing an argument, it will look like this:
+```json
+{
+  "status": "false",
+  "message": "This owner secret is not valid, please contact your game owner."
+}
+```
+
+
+### /auth/mods
+`Request Type: RequestNoUser` - `Method: POST` This endpoint checks the list of moderators of the corresponding `gameid` and `owner_secret` listed.
+```json
+{
+  "owner_secret": "string",
+  "gameid": "string"
+}
+```
+The response will look like this:
+```json
+{
+  "status": "true",
+  "moderators": [
+    "num1",
+    "num2",
+    "cont",
+  ]
+}
+```
+If you are missing an argument, it will look like this:
+```json
+{
+  "status": "false",
+  "message": "This owner secret is not valid, please contact your game owner."
+}
+```
+
+
 ### /auth/check_mod
 `Request Type: Request User` - `Method: POST`
 
 This endpoint checks if a specified UserID is a moderator. The server will perform a check in realtime, making it so that you can instantly remove one of your moderators; and it will update cross-platform with no delay.
 
 To fufill the request, you need to send all of the arguments. Check out the example below:
-```python
-import requests
-
-data = {
+```json
+{
   "owner_secret": "your_owner_secret",
   "gameid": "123456",
   "userid": "123456"
 }
-
-request = requests.post("https://api.polarisadmin.xyz/auth/check_mod", data=data)
-print(request.json())
 ```
 The response will look like this:
 ```json
@@ -135,5 +177,55 @@ If you are missing an argument, it will look like this:
 ```
 **Please note that the "message" arguments in these arguments are meant to be displayed to your members, outputted to logs, or exfiltrated to your webhooks. Some responses might not have these, so please perform a check in your code to see if the response had a message argument.**
 
-### /auth/check
-`Request Type: RequestNoUser` - `Method: POST`
+### /auth/creds
+`Request Type: RequestNoUser` - `Method: POST` This endpoint checks the roblox UserId and Discord user Id of the person that has purchased the key of the corresponding `gameid` and `owner_secret` in the following strings.
+```json
+{
+  "owner_secret": "string",
+  "gameid": "string"
+}
+```
+The response will look like this:
+```json
+{
+  "status": "true",
+  "roblox": "num",
+  "discord": "num"
+}
+```
+If you are missing an argument, it will look like this:
+```json
+{
+  "status": "false",
+  "message": "This owner secret is not valid, please contact your game owner."
+}
+```
+
+
+### /auth/mods
+`Request Type: RequestNoUser` - `Method: POST` This endpoint checks the list of moderators of the corresponding `gameid` and `owner_secret` listed.
+```json
+{
+  "owner_secret": "string",
+  "gameid": "string"
+}
+```
+The response will look like this:
+```json
+{
+  "status": "true",
+  "moderators": [
+    "num1",
+    "num2",
+    "cont",
+  ]
+}
+```
+If you are missing an argument, it will look like this:
+```json
+{
+  "status": "false",
+  "message": "This owner secret is not valid, please contact your game owner."
+}
+```
+
