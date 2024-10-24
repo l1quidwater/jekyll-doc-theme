@@ -71,10 +71,6 @@ In this section, we will be showing you authentication endpoints. These have fun
 
 **Please note that the "message" arguments in some responses are meant to be displayed to your members, outputted to logs, or exfiltrated to your webhooks. Some responses might not have these, so please perform a check in your code to see if the response had a message argument. If you think some aren't long enough or don't fit right, you can implement logic to check if the status was `true` or `false`, and return your own strings.**
 
-
-
-
-
 ### /auth/create_mod
 
 `Request Type: Request User` - `Method: POST`
@@ -115,13 +111,6 @@ If the request was missing a required arguments, then it will return something l
 }
 ```
 
-
-
-
-
-
-
-
 ### /auth/remove_mod
 `Request Type: UserRequest`  `Method: POST`
 This endpoint removes a moderator. As pointed out in **/auth/create_mod**, you **must** practice atleast the barebones in terms of safety, by referring every request from the client to your server (which acts as the boundary between `client -> api`), and make the server itself communicate to the API, checking if that user is authorized.
@@ -160,13 +149,6 @@ Unsuccessful response:
 }
 ```
 
-
-
-
-
-
-
-
 ### /auth/check_game
 
 `Request Type: RequestNoUser` - `Method: POST` This endpoint checks if the corresponding `gameid` and `owner_secret` in the following strings are valid/is an actual registered and game.
@@ -195,11 +177,6 @@ If you are missing an argument, it will look like this:
   "message": "This owner secret is not valid, please contact your game owner."
 }
 ```
-
-
-
-
-
 
 ### /auth/mods
 
@@ -233,11 +210,6 @@ If you are missing an argument, it will look like this:
   "message": "This owner secret is not valid, please contact your game owner."
 }
 ```
-
-
-
-
-
 
 ### /auth/check_mod
 
@@ -277,13 +249,6 @@ If you are missing an argument, it will look like this:
   "message": "Invalid owner secret, contact your game owners immediately."
 }
 ```
-
-
-
-
-
-
-
 
 ### /auth/creds
 
