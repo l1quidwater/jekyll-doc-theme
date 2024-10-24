@@ -284,3 +284,30 @@ If you are missing an argument, it will look like this:
 }
 ```
 
+## Moderation
+
+### /mod/ban
+`Request Type: BanRequest` - `Method: POST`
+This endpoint will accept a UserID to ban. Please note that just like any of the other endpoints, you need to secure your API logic.
+
+An example request to this endpoint would look like this:
+```python
+import requests
+
+data = {
+  "owner_secret": "your_owner_secret",
+  "gameid": "123456",
+  "userid": "123456",
+  "reason": "your_reason_here"
+}
+
+request = requests.post("https://api.polarisadmin.xyz/mod/ban", data=data)
+print(request.json())
+```
+An example response:
+```json
+{
+  "status": "true",
+  "message": "User banned"
+}
+```
