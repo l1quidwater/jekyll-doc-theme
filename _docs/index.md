@@ -88,7 +88,8 @@ import requests
 data = {
   "owner_secret": "your_owner_secret",
   "gameid": "123456",
-  "userid": "123456"
+  "userid": "123456",
+  "discordid": "123456"
 }
 
 request = requests.post("https://api.polarisadmin.xyz/auth/create_mod", data=data)
@@ -311,3 +312,90 @@ An example response:
   "message": "User banned"
 }
 ```
+
+### /mod/unban
+`Request Type: RequestNoUser` - `Method: POST`
+This endpoint will accept a UserID to unban. Please note that just like any of the other endpoints, you need to secure your API logic.
+
+An example request to this endpoint would look like this:
+```python
+import requests
+
+data = {
+  "owner_secret": "your_owner_secret",
+  "gameid": "123456",
+  "userid": "123456"
+}
+
+request = requests.post("https://api.polarisadmin.xyz/mod/unban", data=data)
+print(request.json())
+```
+An example response:
+```json
+{
+  "status": "true",
+  "message": "User unbanned"
+}
+```
+
+### /mod/bans
+`Request Type: RequestNoUser` - `Method: POST`
+This endpoint returns all bans, alongside the reason for the ban. Using this, you are able to decide who is banned, and kick them, or do any logic you wish.  Please note that just like any of the other endpoints, you need to secure your API logic.
+
+An example request to this endpoint would look like this:
+```python
+import requests
+
+data = {
+  "owner_secret": "your_owner_secret",
+  "gameid": "123456",
+  "userid": "123456"
+}
+
+request = requests.post("https://api.polarisadmin.xyz/mod/bans", data=data)
+print(request.json())
+```
+An example response:
+```json
+{
+  "status": "true",
+  "player_bans": {
+    {
+      "123456789": "reason"
+    },
+
+    {
+      "123456789": "reason"
+    }
+  }
+}
+```
+
+## Misc
+
+### /misc/motd
+`Request Type: RequestNoUser` - `Method: POST`
+
+This endpoint is designed to give you a pseudorandom (out of 1-20) message of the days. If you came here from the panel, please note that you can comment out logic and manually set a message of the day. This will let you have uniqueness and be a nice addition.
+
+
+An example request to this endpoint would look like this:
+```python
+import requests
+
+data = {
+  "owner_secret": "your_owner_secret",
+  "gameid": "123456"
+}
+
+request = requests.post("https://api.polarisadmin.xyz/misc/motd", data=data)
+print(request.json())
+```
+An example response:
+```json
+{
+  "status": "true",
+  "motd": "Tailwind for the win!"
+}
+```
+
