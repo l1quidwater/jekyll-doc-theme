@@ -8,7 +8,18 @@ redirect_from: /docs/index.html
 
 Most Polaris API endpoints take one of the two defined class arguments. These arguments should be passed as strings, even if you are giving a number. We do this purely for convenience, as it's easier to remember to just `tostring` or `str()` something for example.
 
-Here are the two types of requests we accept:
+Here are some of the types of requests we accept:
+
+### CreateRequest
+This request is used specifically for moderation.
+```json
+{
+  "owner_secret": "your_owner_secret",
+  "gameid": "123456",
+  "userid": "123456",
+  "discordid": "123456"
+}
+```
 
 ### RequestUser
 
@@ -65,7 +76,7 @@ The following endpoints use the following methods:
 - /mod/ban
 - /mod/unban
 - /mod/bans
-
+- /misc/global
 
 ---
 
@@ -185,7 +196,9 @@ If you are missing an argument, it will look like this:
 
 ### /auth/mods
 
-`Request Type: RequestNoUser` - `Method: POST` This endpoint checks the list of moderators of the corresponding `gameid` and `owner_secret` listed.
+`Request Type: RequestNoUser` - `Method: POST`
+This endpoint checks the list of moderators of the corresponding `gameid` and `owner_secret` listed.
+Each moderator will have its own `key` and `pair`. The key represents the moderators' RobloxID and the pair represents the moderators' Discord ID as a string type.
 
 ```json
 {
@@ -200,9 +213,12 @@ The response will look like this:
 {
   "status": "true",
   "moderators": [
-    "num1",
-    "num2",
-    "cont",
+    {
+      "1234": "4321"
+    },
+    {
+      "6789": "9876"
+    }
   ]
 }
 ```
@@ -271,8 +287,8 @@ The response will look like this:
 ```json
 {
   "status": "true",
-  "roblox": "num",
-  "discord": "num"
+  "roblox": "123456",
+  "discord": "7891234"
 }
 ```
 
@@ -385,7 +401,7 @@ import requests
 
 data = {
   "owner_secret": "your_owner_secret",
-  "gameid": "123456"
+  "gameid": "123456789"
 }
 
 request = requests.post("https://api.polarisadmin.xyz/misc/motd", data=data)
@@ -396,6 +412,28 @@ An example response:
 {
   "status": "true",
   "motd": "Tailwind for the win!"
+}
+```
+
+## /misc/global
+`Request Type: RequestNoUser` - `Method: POST`
+
+This endpoint lets you fetch the latest customer-wide announcements from Polaris HQ. These are reserved only for outages/maintainances, or severe problems. **We will not overuse this feature**.
+
+When the server responds back with the json response, if the `"message"` key's value is not equal to `"nil"`, you should display this message to the user. When there are no messages to be sent, the message will be set to a string of `"nil"`.
+
+Example request JSON (RequestNoUser):
+```json
+{
+  "owner_secret": "change_me",
+  "gameid": "123456789"
+}
+```
+When sending a request, it will respond back with a response like this:
+```json
+{
+  "status": "true",
+  "message": "nil"
 }
 ```
 
